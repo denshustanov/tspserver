@@ -2,6 +2,7 @@ package com.company.tspserver.controller;
 
 import com.company.tspserver.dto.UserDTO;
 import com.company.tspserver.entity.User;
+import com.company.tspserver.service.PostService;
 import com.company.tspserver.service.SubscriptionService;
 import com.company.tspserver.service.UserService;
 import io.jmix.core.DataManager;
@@ -27,6 +28,9 @@ public class UserController {
     @Autowired
     protected CurrentAuthentication currentAuthentication;
 
+    @Autowired
+    protected PostService postService;
+
 
     Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -51,6 +55,7 @@ public class UserController {
         UserDTO userDTO = new UserDTO(user);
         userDTO.setSubscribersCount(subscriptionService.calculateUserSubscribers(username));
         userDTO.setSubscriptionsCount(subscriptionService.calculateUserSubscriptions(username));
+        userDTO.setPostsCount(postService.calculateUserPosts(username));
         return ResponseEntity.ok(userDTO);
     }
 

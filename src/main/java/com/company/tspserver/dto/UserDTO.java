@@ -12,6 +12,7 @@ public class UserDTO {
     private String avatar;
     private int subscriptionsCount;
     private int subscribersCount;
+    private int postsCount;
 
     public UserDTO(
             @JsonProperty("username") String username,
@@ -79,5 +80,13 @@ public class UserDTO {
 
     public void setSubscribersCount(int subscribersCount) {
         this.subscribersCount = subscribersCount;
+    }
+
+    public int getPostsCount() {
+        return postsCount;
+    }
+
+    public void setPostsCount(int postsCount) {
+        this.postsCount = postsCount;
     }
 }
