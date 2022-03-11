@@ -10,12 +10,14 @@ public class UserDTO {
     private String password;
     private String bio;
     private String avatar;
+    private int subscriptionsCount;
+    private int subscribersCount;
 
     public UserDTO(
             @JsonProperty("username") String username,
             @JsonProperty("password") String password,
             @JsonProperty("bio") String bio,
-            @JsonProperty("avatar") String avatar) {
+            @JsonProperty("avatar") String avatart) {
         this.username = username;
         this.password = password;
         this.bio = bio;
@@ -61,5 +63,21 @@ public class UserDTO {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public int getSubscriptionsCount() {
+        return subscriptionsCount;
+    }
+
+    public void setSubscriptionsCount(int subscriptionsCount) {
+        this.subscriptionsCount = subscriptionsCount;
+    }
+
+    public int getSubscribersCount() {
+        return subscribersCount;
+    }
+
+    public void setSubscribersCount(int subscribersCount) {
+        this.subscribersCount = subscribersCount;
     }
 }

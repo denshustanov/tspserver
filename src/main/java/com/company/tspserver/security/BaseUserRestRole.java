@@ -30,5 +30,9 @@ public interface BaseUserRestRole {
             entityClass = PostAttachment.class,
             actions = EntityPolicyAction.ALL
     )
+    @EntityPolicy(
+            entityClass = Subscription.class,
+            actions = EntityPolicyAction.ALL
+    )
     void user();
 }
