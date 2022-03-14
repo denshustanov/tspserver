@@ -11,4 +11,5 @@ public interface SubscriptionRepository {
     List<Subscription> findAllUserSubscriptions(User user);
     List<Subscription> findAllUserSubscribers(User user);
     List<Subscription> findSubscriptions(User subscriber, User subscription);
+    void deleteAllUserRelatedSubscriptions(User user);
 }

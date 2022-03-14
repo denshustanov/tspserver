@@ -51,9 +51,14 @@ public class User implements JmixUserDetails, HasTimeZone {
     @Column(name = "TIME_ZONE_ID")
     protected String timeZoneId;
 
-    @OnDelete(DeletePolicy.CASCADE)
-    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Post> posts;
+
+    @OneToMany(mappedBy = "subscriber", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<Subscription> subscriptions;
+
+    @OneToMany(mappedBy = "subscription", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<Subscription> subscribers;
 
     @Column(name = "AVATAR")
     protected byte[] avatar;
@@ -170,5 +175,21 @@ public class User implements JmixUserDetails, HasTimeZone {
 
     public void setTimeZoneId(String timeZoneId) {
         this.timeZoneId = timeZoneId;
+    }
+
+    public List<Subscription> getSubscriptions() {
+        return subscriptions;
+    }
+
+    public void setSubscriptions(List<Subscription> subscriptions) {
+        this.subscriptions = subscriptions;
+    }
+
+    public List<Subscription> getSubscribers() {
+        return subscribers;
+    }
+
+    public void setSubscribers(List<Subscription> subscribers) {
+        this.subscribers = subscribers;
     }
 }

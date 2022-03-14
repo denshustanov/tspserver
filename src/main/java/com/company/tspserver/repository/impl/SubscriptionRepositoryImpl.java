@@ -52,4 +52,12 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
                 .parameter("subscriber", subscriber)
                 .list();
     }
+
+    @Override
+    public void deleteAllUserRelatedSubscriptions(User user) {
+        List<Subscription> subscriptions = dataManager.load(Subscription.class)
+                .query("select s from Subscription s where s.subscription = :user or s.subscriber = :user")
+                .list();
+        dataManager.remove(subscriptions);
+    }
 }

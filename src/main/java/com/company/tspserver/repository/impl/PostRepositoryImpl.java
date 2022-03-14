@@ -4,13 +4,11 @@ import com.company.tspserver.entity.Post;
 import com.company.tspserver.entity.PostAttachment;
 import com.company.tspserver.entity.User;
 import com.company.tspserver.repository.PostRepository;
-import com.company.tspserver.repository.UserRepository;
 import io.jmix.core.DataManager;
 import io.jmix.core.querycondition.PropertyCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.inject.Inject;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.LinkedList;
@@ -22,14 +20,10 @@ public class PostRepositoryImpl implements PostRepository {
     @Autowired
     protected DataManager dataManager;
 
-    @Inject
-    protected UserRepository userRepository;
-
     @Override
-    public List<Post> findPostByAuthorUsername(String username) {
-        User author = userRepository.findUserByUsername(username);
+    public List<Post> findPostByAuthor(User user) {
         return dataManager.load(Post.class)
-                .condition(PropertyCondition.equal("author", author))
+                .condition(PropertyCondition.equal("author", user))
                 .list();
     }
 
@@ -83,5 +77,11 @@ public class PostRepositoryImpl implements PostRepository {
                 .firstResult(0)
                 .maxResults(10)
                 .list();
+    }
+
+    @Override
+    public void deleteAllUserPosts(User user) {
+        List<Post> posts = findPostByAuthor(user);
+        dataManager.remove(posts);
     }
 }

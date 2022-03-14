@@ -24,7 +24,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Post> findPostByAuthorUsername(String username) {
-        return postRepository.findPostByAuthorUsername(username);
+        User user = userRepository.findUserByUsername(username);
+        return postRepository.findPostByAuthor(user);
     }
 
     @Override
@@ -48,7 +49,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public int calculateUserPosts(String username) {
-        return postRepository.findPostByAuthorUsername(username).size();
+        User user = userRepository.findUserByUsername(username);
+        return postRepository.findPostByAuthor(user).size();
     }
 
     @Override

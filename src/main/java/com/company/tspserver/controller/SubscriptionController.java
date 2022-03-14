@@ -64,7 +64,7 @@ public class SubscriptionController {
 
     @GetMapping(value = "/subscription")
     ResponseEntity checkSubscription(@RequestParam(name = "subscriber") String subscriberUsername, @RequestParam(name = "subscription") String subscriptionUsername){
-        logger.info(subscriberUsername + ' ' + subscriptionUsername);
+        logger.info("check " + subscriberUsername + ' ' + subscriptionUsername);
         return ResponseEntity.ok(subscriptionService.checkSubscription(subscriberUsername, subscriptionUsername));
     }
 

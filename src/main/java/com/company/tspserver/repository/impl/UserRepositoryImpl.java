@@ -1,6 +1,8 @@
 package com.company.tspserver.repository.impl;
 
 import com.company.tspserver.entity.User;
+import com.company.tspserver.repository.PostRepository;
+import com.company.tspserver.repository.SubscriptionRepository;
 import com.company.tspserver.repository.UserRepository;
 import io.jmix.core.DataManager;
 import io.jmix.core.entity.KeyValueEntity;
@@ -20,6 +22,16 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Autowired
     protected PasswordEncoder passwordEncoder;
+
+    @Autowired
+    protected SubscriptionRepository subscriptionRepository;
+
+    protected PostRepository postRepository;
+
+    @Autowired
+    public void setPostRepository(PostRepository postRepository) {
+        this.postRepository = postRepository;
+    }
 
     @Override
     public User createUser(String username, String password, String bio) {
@@ -73,6 +85,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void deleteUser(User user) {
+        postRepository.deleteAllUserPosts(user);
+        subscriptionRepository.deleteAllUserRelatedSubscriptions(user);
         dataManager.remove(user);
     }
 

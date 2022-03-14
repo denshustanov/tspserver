@@ -1,6 +1,8 @@
 package com.company.tspserver.entity;
 
+import io.jmix.core.DeletePolicy;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
+import io.jmix.core.entity.annotation.OnDeleteInverse;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 
 import javax.persistence.*;
@@ -15,10 +17,12 @@ public class Subscription {
     @Id
     private UUID id;
 
+    @OnDeleteInverse(DeletePolicy.CASCADE)
     @JoinColumn(name = "SUBSCRIPTION_ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private User subscription;
 
+    @OnDeleteInverse(DeletePolicy.CASCADE)
     @JoinColumn(name = "SUBSCRIBER_ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private User subscriber;

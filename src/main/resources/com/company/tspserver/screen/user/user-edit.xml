@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://jmix.io/schema/ui/window"
-        caption="msg://UserEdit.caption"
+        caption="msg://userEdit.caption"
         focusComponent="form">
     <data>
         <instance id="userDc"
@@ -9,9 +9,12 @@
             <loader/>
         </instance>
     </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <screenSettings id="settingsFacet" auto="true"/>
+    </facets>
     <actions>
-        <action id="windowCommitAndClose"
-                caption="msg:///actions.Ok"
+        <action id="windowCommitAndClose" caption="msg:///actions.Ok"
                 icon="EDITOR_OK"
                 primary="true"
                 shortcut="${COMMIT_SHORTCUT}"/>
@@ -19,25 +22,16 @@
                 caption="msg:///actions.Close"
                 icon="EDITOR_CANCEL"/>
     </actions>
-    <facets>
-        <dataLoadCoordinator auto="true"/>
-    </facets>
     <dialogMode height="600"
                 width="800"/>
     <layout spacing="true" expand="editActions">
         <form id="form" dataContainer="userDc">
             <column width="350px">
-                <textField id="usernameField" property="username" editable="false"/>
-                <passwordField id="passwordField"
-                               caption="msg://com.company.tspserver.entity/User.password"
-                               required="true"
-                               visible="false"/>
-                <passwordField id="confirmPasswordField"
-                               caption="msg://confirmPassword"
-                               required="true"
-                               visible="false"/>
-                <comboBox id="timeZoneField" property="timeZoneId"/>
+                <textField id="usernameField" property="username"/>
+                <textField id="bioField" property="bio"/>
                 <checkBox id="activeField" property="active"/>
+                <textField id="timeZoneIdField" property="timeZoneId"/>
+                <fileUpload id="avatarField" property="avatar"/>
             </column>
         </form>
         <hbox id="editActions" spacing="true">

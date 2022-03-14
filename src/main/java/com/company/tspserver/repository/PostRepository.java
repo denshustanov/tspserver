@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface PostRepository {
-    List<Post> findPostByAuthorUsername(String username);
+    List<Post> findPostByAuthor(User user);
 
     List<Post> findPostByText(String text);
 
@@ -21,4 +21,6 @@ public interface PostRepository {
 
     PostAttachment findPostAttachmentById(UUID id);
     List<Post> findAllPosts();
+
+    void deleteAllUserPosts(User user);
 }
