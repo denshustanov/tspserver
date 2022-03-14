@@ -1,6 +1,7 @@
 package com.company.tspserver.repository;
 
 import com.company.tspserver.entity.Post;
+import com.company.tspserver.entity.PostAttachment;
 import com.company.tspserver.entity.User;
 
 import java.time.LocalDateTime;
@@ -17,4 +18,7 @@ public interface PostRepository {
     void deletePost(Post post);
 
     Post findPostById(UUID id);
+
+    PostAttachment findPostAttachmentById(UUID id);
+    List<Post> findAllPosts();
 }

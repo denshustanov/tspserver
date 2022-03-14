@@ -14,8 +14,8 @@ public class UserServiceImpl implements UserService {
     protected UserRepository userRepository;
 
     @Override
-    public User createUser(String username, String password, String bio, byte[] avatar) {
-        return userRepository.createUser(username, password, bio, avatar);
+    public User createUser(String username, String password, String bio) {
+        return userRepository.createUser(username, password, bio);
     }
 
     @Override
@@ -41,5 +41,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(User user) {
         userRepository.deleteUser(user);
+    }
+
+    @Override
+    public boolean checkUsernameAvailable(String username) {
+        return userRepository.findUsername(username).isEmpty();
+    }
+
+    @Override
+    public byte[] getUserAvatar(String username) {
+        return userRepository.findUserByUsername(username).getAvatar();
     }
 }

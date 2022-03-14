@@ -58,6 +58,7 @@ public class User implements JmixUserDetails, HasTimeZone {
     @Column(name = "AVATAR")
     protected byte[] avatar;
 
+
     @Transient
     protected Collection<? extends GrantedAuthority> authorities;
 

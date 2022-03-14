@@ -2,6 +2,7 @@ package com.company.tspserver.service;
 
 import com.company.tspserver.dto.PostDTO;
 import com.company.tspserver.entity.Post;
+import com.company.tspserver.entity.PostAttachment;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,4 +15,6 @@ public interface PostService {
     void deletePost(UUID postId);
     int calculateUserPosts(String username);
     Post findPostById(UUID postId);
+    PostAttachment findPostAttachmentById(UUID id);
+    List<Post> findAllPosts();
 }

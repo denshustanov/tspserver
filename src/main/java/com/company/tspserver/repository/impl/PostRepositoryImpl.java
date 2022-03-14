@@ -69,4 +69,19 @@ public class PostRepositoryImpl implements PostRepository {
         return dataManager.load(Post.class)
                 .id(id).one();
     }
+
+    @Override
+    public PostAttachment findPostAttachmentById(UUID id) {
+        return dataManager.load(PostAttachment.class)
+                .id(id)
+                .one();
+    }
+
+    @Override
+    public List<Post> findAllPosts() {
+        return dataManager.load(Post.class).all()
+                .firstResult(0)
+                .maxResults(10)
+                .list();
+    }
 }

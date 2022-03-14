@@ -3,10 +3,13 @@ package com.company.tspserver.controller;
 import com.company.tspserver.dto.PostDTO;
 import com.company.tspserver.dto.UserDTO;
 import com.company.tspserver.entity.Post;
+import com.company.tspserver.entity.PostAttachment;
 import com.company.tspserver.entity.User;
 import com.company.tspserver.service.PostService;
 import com.company.tspserver.service.UserService;
 import io.jmix.core.security.CurrentAuthentication;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,9 +29,12 @@ public class PostController {
     @Autowired
     protected CurrentAuthentication currentAuthentication;
 
+    Logger logger = LoggerFactory.getLogger(PostController.class);
+
     @PostMapping(value = "/post")
     ResponseEntity createPost(@RequestBody PostDTO postDTO){
         String username = currentAuthentication.getUser().getUsername();
+        logger.info("new post, "+username);
         if(postDTO.getAuthor() == null){
             User author = userService.findUserByUsername(username);
             postDTO.setAuthor(new UserDTO(author));
@@ -68,5 +74,30 @@ public class PostController {
         } catch (Exception e){
             return ResponseEntity.status(404).body("Post not found!");
         }
+    }
+
+    @GetMapping(value = "/post/attachment/{id}")
+    ResponseEntity getPostAttachment(@PathVariable String id){
+        UUID attachmentId = UUID.fromString(id);
+
+        try{
+            PostAttachment postAttachment = postService.findPostAttachmentById(attachmentId);
+            return ResponseEntity.ok(postAttachment.getImage());
+        } catch (Exception e){
+            return ResponseEntity.status(404).body("Attachment not found");
+        }
+    }
+
+    @GetMapping(value = "/post/all")
+    ResponseEntity getAllPosts(){
+        List<Post> posts = postService.findAllPosts();
+
+        List<PostDTO> postDTOS = new LinkedList<>();
+
+        for(Post post: posts){
+            postDTOS.add(new PostDTO(post));
+        }
+
+        return ResponseEntity.ok(postDTOS);
     }
 }

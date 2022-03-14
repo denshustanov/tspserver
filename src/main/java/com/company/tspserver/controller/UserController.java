@@ -37,16 +37,12 @@ public class UserController {
     @PostMapping(value = "/user/register")
     public ResponseEntity registerUser(@RequestBody UserDTO userDTO) {
         logger.info("register " + currentAuthentication.getUser().getUsername());
-        byte[] avatar = null;
-        if (userDTO.getAvatar()!=null){
-            avatar = Base64.getDecoder().decode(userDTO.getAvatar());
-        }
+
         User user = userService.createUser(userDTO.getUsername(),
                 userDTO.getPassword(),
-                userDTO.getBio(),
-                avatar);
+                userDTO.getBio());
 
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(new UserDTO((user)));
     }
 
     @GetMapping(value = "/user/{username}")
@@ -59,21 +55,33 @@ public class UserController {
         return ResponseEntity.ok(userDTO);
     }
 
-    @PutMapping(value = "/user/{username}")
-    public ResponseEntity updateUser(@PathVariable String username, @RequestBody UserDTO userDTO){
+    @PutMapping(value = "/user/{username}/avatar")
+    public ResponseEntity updateUser(@PathVariable String username, @RequestBody byte[] avatar){
         if(!currentAuthentication.getUser().getUsername().equals(username)){
             return ResponseEntity.status(403).body("Can not update another user!");
         }
 
-        if(userDTO.getAvatar()!=null) {
-            userService.updateUserAvatar(username, Base64.getDecoder().decode(userDTO.getAvatar()));
-        }
-
-        if(userDTO.getBio()!=null) {
-            userService.updateUserBio(username, userDTO.getBio());
-        }
+        userService.updateUserAvatar(username, avatar);
         return ResponseEntity.ok(new UserDTO(userService.findUserByUsername(username)));
     }
 
+    @PutMapping(value = "/user/{username}/bio")
+    public ResponseEntity updateUser(@PathVariable String username, @RequestBody String bio){
+        if(!currentAuthentication.getUser().getUsername().equals(username)){
+            return ResponseEntity.status(403).body("Can not update another user!");
+        }
 
+        userService.updateUserBio(username, bio);
+        return ResponseEntity.ok(new UserDTO(userService.findUserByUsername(username)));
+    }
+
+    @GetMapping(value = "/user/{username}/available")
+    public ResponseEntity getUsernameAvailable(@PathVariable String username){
+        return ResponseEntity.ok(userService.checkUsernameAvailable(username));
+    }
+
+    @GetMapping(value = "/user/{username}/avatar")
+    public ResponseEntity getUserAvatar(@PathVariable String username){
+        return ResponseEntity.ok(userService.getUserAvatar(username));
+    }
 }

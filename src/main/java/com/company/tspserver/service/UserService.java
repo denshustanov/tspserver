@@ -5,7 +5,7 @@ import com.company.tspserver.entity.User;
 import java.util.List;
 
 public interface UserService {
-    User createUser(String username, String password, String bio, byte[] avatar);
+    User createUser(String username, String password, String bio);
 
     User updateUserBio(String username, String bio);
 
@@ -16,4 +16,8 @@ public interface UserService {
     List<User> findAllUsersByUsernameSubstring(String usernameSubstring);
 
     void deleteUser(User user);
+
+    boolean checkUsernameAvailable(String username);
+
+    byte[] getUserAvatar(String username);
 }

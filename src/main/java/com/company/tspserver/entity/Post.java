@@ -30,7 +30,7 @@ public class Post {
     @OneToMany(mappedBy = "post")
     private List<PostAttachment> postAttachments;
 
-    @OnDeleteInverse(DeletePolicy.UNLINK)
+//    @OnDeleteInverse(DeletePolicy.CASCADE)
     @JoinColumn(name = "AUTHOR_ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private User author;

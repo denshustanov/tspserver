@@ -15,27 +15,37 @@ public class PostDTO {
     private String text;
     private LocalDateTime publicationDate;
     private List<String> attachments;
+    private List<String> attachmentIDs;
     private UserDTO author;
     private UUID id;
+    private int likesCount = 0;
+    private int commentsCount = 0;
 
     public PostDTO(
             @JsonProperty("author") UserDTO author,
             @JsonProperty("text") String text,
             @JsonProperty("publicationDate") LocalDateTime publicationDate,
-            @JsonProperty("attachments") List<String> attachments) {
+            @JsonProperty("attachments") List<String> attachments,
+            @JsonProperty("attachmentIDs") List<String> attachmentIDs
+//            @JsonProperty("likesCount") int likesCount,
+//            @JsonProperty("commentsCount") int commentsCount
+            ) {
         this.author = author;
         this.text = text;
         this.publicationDate = publicationDate;
         this.attachments = attachments;
+        this.attachmentIDs = attachmentIDs;
+//        this.likesCount = likesCount;
+//        this.commentsCount = commentsCount;
     }
 
     public PostDTO(Post post){
         this.id = post.getId();
         this.author = new UserDTO(post.getAuthor());
         this.text = post.getText();
-        this.attachments = new LinkedList<>();
+        this.attachmentIDs = new LinkedList<>();
         for(PostAttachment postAttachment: post.getPostAttachments()){
-            attachments.add(Base64.getEncoder().encodeToString(postAttachment.getImage()));
+            attachmentIDs.add(postAttachment.getId().toString());
         }
         this.publicationDate = post.getPublicationDate();
     }
@@ -78,5 +88,29 @@ public class PostDTO {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public List<String> getAttachmentIDs() {
+        return attachmentIDs;
+    }
+
+    public void setAttachmentIDs(List<String> attachmentIDs) {
+        this.attachmentIDs = attachmentIDs;
+    }
+
+    public int getLikesCount() {
+        return likesCount;
+    }
+
+    public void setLikesCount(int likesCount) {
+        this.likesCount = likesCount;
+    }
+
+    public int getCommentsCount() {
+        return commentsCount;
+    }
+
+    public void setCommentsCount(int commentsCount) {
+        this.commentsCount = commentsCount;
     }
 }

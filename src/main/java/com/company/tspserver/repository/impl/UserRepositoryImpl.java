@@ -3,6 +3,7 @@ package com.company.tspserver.repository.impl;
 import com.company.tspserver.entity.User;
 import com.company.tspserver.repository.UserRepository;
 import io.jmix.core.DataManager;
+import io.jmix.core.entity.KeyValueEntity;
 import io.jmix.core.querycondition.PropertyCondition;
 import io.jmix.security.role.assignment.RoleAssignmentRoleType;
 import io.jmix.securitydata.entity.RoleAssignmentEntity;
@@ -21,12 +22,11 @@ public class UserRepositoryImpl implements UserRepository {
     protected PasswordEncoder passwordEncoder;
 
     @Override
-    public User createUser(String username, String password, String bio, byte[] avatar) {
+    public User createUser(String username, String password, String bio) {
         User user = dataManager.create(User.class);
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
         user.setBio(bio);
-        user.setAvatar(avatar);
 
         RoleAssignmentEntity baseUserRoleAssignment = dataManager.create(RoleAssignmentEntity.class);
         baseUserRoleAssignment.setUsername(username);
@@ -74,5 +74,13 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public void deleteUser(User user) {
         dataManager.remove(user);
+    }
+
+    @Override
+    public List<KeyValueEntity> findUsername(String username) {
+        return dataManager.loadValues(
+                        "select u.username from User u where u.username = :username"
+                )
+                .parameter("username", username).list();
     }
 }

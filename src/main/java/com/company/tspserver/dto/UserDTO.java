@@ -9,7 +9,6 @@ public class UserDTO {
     private String username;
     private String password;
     private String bio;
-    private String avatar;
     private int subscriptionsCount;
     private int subscribersCount;
     private int postsCount;
@@ -17,20 +16,15 @@ public class UserDTO {
     public UserDTO(
             @JsonProperty("username") String username,
             @JsonProperty("password") String password,
-            @JsonProperty("bio") String bio,
-            @JsonProperty("avatar") String avatart) {
+            @JsonProperty("bio") String bio) {
         this.username = username;
         this.password = password;
         this.bio = bio;
-        this.avatar = avatar;
     }
 
     public UserDTO(User user) {
         this.username = user.getUsername();
         this.bio = user.getBio();
-        if(user.getAvatar()!=null) {
-            this.avatar = Base64.getEncoder().encodeToString(user.getAvatar());
-        }
     }
 
 
@@ -56,14 +50,6 @@ public class UserDTO {
 
     public void setBio(String bio) {
         this.bio = bio;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
     }
 
     public int getSubscriptionsCount() {
