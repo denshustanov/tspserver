@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
-import java.util.Base64;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Repository
 public class PostRepositoryImpl implements PostRepository {
@@ -40,8 +37,9 @@ public class PostRepositoryImpl implements PostRepository {
         post.setAuthor(user);
         post.setText(text);
         post.setPublicationDate(publicationDate);
+        post = dataManager.save(post);
         if(attachments!=null) {
-            List<PostAttachment> postAttachments = new LinkedList<>();
+            List<PostAttachment> postAttachments = new ArrayList<>();
             for (String attachment : attachments) {
                 PostAttachment postAttachment = dataManager.create(PostAttachment.class);
                 postAttachment.setImage(Base64.getDecoder().decode(attachment));
@@ -49,8 +47,9 @@ public class PostRepositoryImpl implements PostRepository {
                 postAttachments.add(postAttachment);
             }
             post.setPostAttachments(postAttachments);
+            dataManager.save(postAttachments);
         }
-        return dataManager.save(post);
+        return post;
     }
 
     @Override

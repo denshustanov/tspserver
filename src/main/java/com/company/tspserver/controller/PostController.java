@@ -29,12 +29,9 @@ public class PostController {
     @Autowired
     protected CurrentAuthentication currentAuthentication;
 
-    Logger logger = LoggerFactory.getLogger(PostController.class);
-
     @PostMapping(value = "/post")
     ResponseEntity createPost(@RequestBody PostDTO postDTO){
         String username = currentAuthentication.getUser().getUsername();
-        logger.info("new post, "+username);
         if(postDTO.getAuthor() == null){
             User author = userService.findUserByUsername(username);
             postDTO.setAuthor(new UserDTO(author));

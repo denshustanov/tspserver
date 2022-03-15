@@ -26,8 +26,8 @@ public class Post {
     @Column(name = "PUBLICATION_DATE")
     protected LocalDateTime publicationDate;
 
-    @OnDelete(DeletePolicy.CASCADE)
-    @OneToMany(mappedBy = "post")
+//    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<PostAttachment> postAttachments;
 
 //    @OnDeleteInverse(DeletePolicy.CASCADE)

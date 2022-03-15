@@ -5,17 +5,10 @@ import com.company.tspserver.entity.User;
 import com.company.tspserver.service.PostService;
 import com.company.tspserver.service.SubscriptionService;
 import com.company.tspserver.service.UserService;
-import io.jmix.core.DataManager;
 import io.jmix.core.security.CurrentAuthentication;
-import liquibase.pro.packaged.U;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Base64;
-import java.util.Objects;
 
 @RestController
 public class UserController {
@@ -31,13 +24,8 @@ public class UserController {
     @Autowired
     protected PostService postService;
 
-
-    Logger logger = LoggerFactory.getLogger(UserController.class);
-
     @PostMapping(value = "/user/register")
     public ResponseEntity registerUser(@RequestBody UserDTO userDTO) {
-        logger.info("register " + currentAuthentication.getUser().getUsername());
-
         User user = userService.createUser(userDTO.getUsername(),
                 userDTO.getPassword(),
                 userDTO.getBio());

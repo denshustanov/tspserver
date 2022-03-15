@@ -23,12 +23,8 @@ public class SubscriptionController {
     @Autowired
     protected CurrentAuthentication currentAuthentication;
 
-    Logger logger = LoggerFactory.getLogger(SubscriptionController.class);
-
     @PostMapping(value = "/subscription")
     ResponseEntity subscribe(@RequestParam(name = "subscriber") String subscriberUsername, @RequestParam(name = "subscription") String subscriptionUsername){
-        logger.info(subscriberUsername + ' ' + subscriptionUsername);
-        logger.info(currentAuthentication.getUser().getUsername());
         if(!currentAuthentication.getUser().getUsername().equals(subscriberUsername)){
             return ResponseEntity.status(403).body("User can subscribe only himself");
         }
@@ -64,7 +60,6 @@ public class SubscriptionController {
 
     @GetMapping(value = "/subscription")
     ResponseEntity checkSubscription(@RequestParam(name = "subscriber") String subscriberUsername, @RequestParam(name = "subscription") String subscriptionUsername){
-        logger.info("check " + subscriberUsername + ' ' + subscriptionUsername);
         return ResponseEntity.ok(subscriptionService.checkSubscription(subscriberUsername, subscriptionUsername));
     }
 
