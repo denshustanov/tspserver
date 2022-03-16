@@ -10,6 +10,11 @@ jmix {
     bomVersion = '1.1.4'
 }
 
+jar{
+    baseName= 'tspserver'
+    version = '0.0.1'
+}
+
 group = 'com.company'
 version = '0.0.1-SNAPSHOT'
 
