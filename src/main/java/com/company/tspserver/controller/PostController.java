@@ -97,4 +97,16 @@ public class PostController {
 
         return ResponseEntity.ok(postDTOS);
     }
+
+    @GetMapping(value = "/post/find")
+    ResponseEntity findPostsByText(@RequestParam(name = "text") String text){
+        List<Post> posts = postService.findPostsByContent(text);
+
+        List<PostDTO> postDTOS = new LinkedList<>();
+        for(Post post: posts){
+            postDTOS.add(new PostDTO(post));
+        }
+
+        return ResponseEntity.ok(postDTOS);
+    }
 }

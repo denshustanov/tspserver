@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedList;
+import java.util.List;
+
 @RestController
 public class UserController {
     @Autowired
@@ -71,5 +74,17 @@ public class UserController {
     @GetMapping(value = "/user/{username}/avatar")
     public ResponseEntity getUserAvatar(@PathVariable String username){
         return ResponseEntity.ok(userService.getUserAvatar(username));
+    }
+
+    @GetMapping(value = "/user/find")
+    public ResponseEntity findUsersByUsername(@RequestParam(name = "username") String username){
+        List<User> users = userService.findAllUsersByUsernameSubstring(username);
+
+        List<UserDTO> userDTOS = new LinkedList<>();
+
+        for(User user: users){
+            userDTOS.add(new UserDTO(user));
+        }
+        return ResponseEntity.ok(userDTOS);
     }
 }
