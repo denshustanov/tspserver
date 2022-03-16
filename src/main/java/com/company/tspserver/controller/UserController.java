@@ -47,7 +47,7 @@ public class UserController {
     }
 
     @PutMapping(value = "/user/{username}/avatar")
-    public ResponseEntity updateUser(@PathVariable String username, @RequestBody byte[] avatar){
+    public ResponseEntity updateUserAvatar(@PathVariable String username, @RequestBody byte[] avatar){
         if(!currentAuthentication.getUser().getUsername().equals(username)){
             return ResponseEntity.status(403).body("Can not update another user!");
         }
@@ -57,7 +57,7 @@ public class UserController {
     }
 
     @PutMapping(value = "/user/{username}/bio")
-    public ResponseEntity updateUser(@PathVariable String username, @RequestBody String bio){
+    public ResponseEntity updateUserBio(@PathVariable String username, @RequestBody String bio){
         if(!currentAuthentication.getUser().getUsername().equals(username)){
             return ResponseEntity.status(403).body("Can not update another user!");
         }
