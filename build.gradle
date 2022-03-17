@@ -10,8 +10,8 @@ jmix {
     bomVersion = '1.1.4'
 }
 
-jar{
-    baseName= 'tspserver'
+jar {
+    baseName = 'tspserver'
     version = '0.0.1'
 }
 

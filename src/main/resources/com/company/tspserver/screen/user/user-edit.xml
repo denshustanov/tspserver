@@ -32,6 +32,7 @@
                 <checkBox id="activeField" property="active"/>
                 <textField id="timeZoneIdField" property="timeZoneId"/>
                 <fileUpload id="avatarField" property="avatar"/>
+                <textField id="password" property="password"/>
             </column>
         </form>
         <hbox id="editActions" spacing="true">
