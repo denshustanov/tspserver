@@ -10,4 +10,5 @@ public interface PostLikeRepository {
     PostLike createPostLike(User user, Post post);
     List<PostLike> findAllLikesByPost(Post post);
     void deletePostLike(PostLike postLike);
+    PostLike findPostLike(User user, Post post);
 }

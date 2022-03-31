@@ -3,10 +3,8 @@ package com.company.tspserver.dto;
 import com.company.tspserver.entity.Post;
 import com.company.tspserver.entity.PostAttachment;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import liquibase.pro.packaged.U;
 
 import java.time.LocalDateTime;
-import java.util.Base64;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
@@ -18,8 +16,8 @@ public class PostDTO {
     private List<String> attachmentIDs;
     private UserDTO author;
     private UUID id;
-    private int likesCount = 0;
-    private int commentsCount = 0;
+    private List<String> usersLiked;
+    private List<PostCommentDTO> comments;
 
     public PostDTO(
             @JsonProperty("author") UserDTO author,
@@ -27,16 +25,12 @@ public class PostDTO {
             @JsonProperty("publicationDate") LocalDateTime publicationDate,
             @JsonProperty("attachments") List<String> attachments,
             @JsonProperty("attachmentIDs") List<String> attachmentIDs
-//            @JsonProperty("likesCount") int likesCount,
-//            @JsonProperty("commentsCount") int commentsCount
             ) {
         this.author = author;
         this.text = text;
         this.publicationDate = publicationDate;
         this.attachments = attachments;
         this.attachmentIDs = attachmentIDs;
-//        this.likesCount = likesCount;
-//        this.commentsCount = commentsCount;
     }
 
     public PostDTO(Post post){
@@ -98,19 +92,19 @@ public class PostDTO {
         this.attachmentIDs = attachmentIDs;
     }
 
-    public int getLikesCount() {
-        return likesCount;
+    public List<String> getUsersLiked() {
+        return usersLiked;
     }
 
-    public void setLikesCount(int likesCount) {
-        this.likesCount = likesCount;
+    public void setUsersLiked(List<String> usersLiked) {
+        this.usersLiked = usersLiked;
     }
 
-    public int getCommentsCount() {
-        return commentsCount;
+    public List<PostCommentDTO> getComments() {
+        return comments;
     }
 
-    public void setCommentsCount(int commentsCount) {
-        this.commentsCount = commentsCount;
+    public void setComments(List<PostCommentDTO> comments) {
+        this.comments = comments;
     }
 }

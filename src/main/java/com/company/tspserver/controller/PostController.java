@@ -1,10 +1,10 @@
 package com.company.tspserver.controller;
 
+import com.company.tspserver.dto.PostCommentDTO;
 import com.company.tspserver.dto.PostDTO;
 import com.company.tspserver.dto.UserDTO;
-import com.company.tspserver.entity.Post;
-import com.company.tspserver.entity.PostAttachment;
-import com.company.tspserver.entity.User;
+import com.company.tspserver.dto.mapper.PostMapper;
+import com.company.tspserver.entity.*;
 import com.company.tspserver.service.PostService;
 import com.company.tspserver.service.UserService;
 import io.jmix.core.security.CurrentAuthentication;
@@ -29,6 +29,9 @@ public class PostController {
     @Autowired
     protected CurrentAuthentication currentAuthentication;
 
+    @Autowired
+    protected PostMapper postMapper;
+
     @PostMapping(value = "/post")
     ResponseEntity createPost(@RequestBody PostDTO postDTO){
         String username = currentAuthentication.getUser().getUsername();
@@ -50,7 +53,7 @@ public class PostController {
         List<PostDTO> postDTOS = new LinkedList<>();
 
         for (Post post: posts) {
-            postDTOS.add(new PostDTO(post));
+            postDTOS.add(postMapper.convertToDto(post));
         }
 
         return ResponseEntity.ok(postDTOS);
@@ -92,7 +95,7 @@ public class PostController {
         List<PostDTO> postDTOS = new LinkedList<>();
 
         for(Post post: posts){
-            postDTOS.add(new PostDTO(post));
+            postDTOS.add(postMapper.convertToDto(post));
         }
 
         return ResponseEntity.ok(postDTOS);
@@ -104,9 +107,40 @@ public class PostController {
 
         List<PostDTO> postDTOS = new LinkedList<>();
         for(Post post: posts){
-            postDTOS.add(new PostDTO(post));
+            postDTOS.add(postMapper.convertToDto(post));
         }
 
         return ResponseEntity.ok(postDTOS);
+    }
+
+    @PostMapping(value = "/post/{id}/like")
+    ResponseEntity createPostLike(@PathVariable String id){
+        String username = currentAuthentication.getUser().getUsername();
+        UUID postId = UUID.fromString(id);
+        PostLike like = postService.createPostLike(username, postId);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping(value = "/post/{id}/like")
+    ResponseEntity deletePostLike(@PathVariable String id){
+        String username = currentAuthentication.getUser().getUsername();
+        UUID postId = UUID.fromString(id);
+        postService.deletePostLike(username, postId);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(value = "/post/{id}/comments")
+    ResponseEntity getPostComments(@PathVariable String id){
+        return null;
+    }
+
+    @PostMapping(value = "/post/{id}/comment")
+    ResponseEntity createPostComment(@RequestBody PostCommentDTO postCommentDTO){
+        System.out.println("comment!");
+        String username = currentAuthentication.getUser().getUsername();
+        User user = userService.findUserByUsername(username);
+        postCommentDTO.setAuthor(new UserDTO(user));
+        PostComment comment = postService.createPostComment(postCommentDTO);
+        return ResponseEntity.ok(new PostCommentDTO(comment));
     }
 }

@@ -5,6 +5,7 @@ import com.company.tspserver.entity.PostLike;
 import com.company.tspserver.entity.User;
 import com.company.tspserver.repository.PostLikeRepository;
 import io.jmix.core.DataManager;
+import io.jmix.core.querycondition.LogicalCondition;
 import io.jmix.core.querycondition.PropertyCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -35,5 +36,17 @@ public class PostLikeRepositoryImpl implements PostLikeRepository {
     @Override
     public void deletePostLike(PostLike postLike) {
         dataManager.remove(postLike);
+    }
+
+    @Override
+    public PostLike findPostLike(User user, Post post) {
+        return dataManager.load(PostLike.class)
+                .condition(
+                        LogicalCondition.and(
+                                PropertyCondition.equal("post", post),
+                                PropertyCondition.equal("user", user)
+                        )
+                )
+                .one();
     }
 }

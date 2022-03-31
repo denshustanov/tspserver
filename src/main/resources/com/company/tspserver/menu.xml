@@ -7,6 +7,8 @@
               caption="msg://com.company.tspserver.screen.subscription/subscriptionBrowse.menu"/>
         <item screen="Post.browse" caption="msg://com.company.tspserver.screen.post/postBrowse.menu"/>
         <item screen="User.browse" caption="msg://com.company.tspserver.screen.user/userBrowse.menu"/>
+        <item screen="PostComment.browse"
+              caption="msg://com.company.tspserver.screen.postcomment/postCommentBrowse.menu"/>
     </menu>
 
 </menu-config>

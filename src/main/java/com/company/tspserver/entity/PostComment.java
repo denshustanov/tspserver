@@ -7,6 +7,7 @@ import io.jmix.core.entity.annotation.OnDeleteInverse;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @JmixEntity
@@ -32,6 +33,9 @@ public class PostComment {
 
     @Column(name = "TEXT")
     private String text;
+
+    @Column(name = "PUBLICATION_DATE")
+    private LocalDateTime publcationDate;
 
     public Post getPost() {
         return post;
@@ -59,5 +63,13 @@ public class PostComment {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public LocalDateTime getPublcationDate() {
+        return publcationDate;
+    }
+
+    public void setPublicationDate(LocalDateTime publcationDate) {
+        this.publcationDate = publcationDate;
     }
 }

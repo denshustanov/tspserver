@@ -5,6 +5,7 @@ import com.company.tspserver.entity.PostAttachment;
 import com.company.tspserver.entity.User;
 import com.company.tspserver.repository.PostRepository;
 import io.jmix.core.DataManager;
+import io.jmix.core.SaveContext;
 import io.jmix.core.querycondition.PropertyCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -39,15 +40,17 @@ public class PostRepositoryImpl implements PostRepository {
         post.setPublicationDate(publicationDate);
         post = dataManager.save(post);
         if(attachments!=null) {
-            List<PostAttachment> postAttachments = new ArrayList<>();
+            List<PostAttachment> postAttachments = new LinkedList<>();
+            SaveContext context = new SaveContext();
             for (String attachment : attachments) {
                 PostAttachment postAttachment = dataManager.create(PostAttachment.class);
                 postAttachment.setImage(Base64.getDecoder().decode(attachment));
                 postAttachment.setPost(post);
                 postAttachments.add(postAttachment);
+                context.saving(postAttachment);
             }
             post.setPostAttachments(postAttachments);
-            dataManager.save(postAttachments);
+            dataManager.save(context);
         }
         return post;
     }

@@ -26,21 +26,19 @@ public class Post {
     @Column(name = "PUBLICATION_DATE")
     protected LocalDateTime publicationDate;
 
-//    @OnDelete(DeletePolicy.CASCADE)
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<PostAttachment> postAttachments;
 
-//    @OnDeleteInverse(DeletePolicy.CASCADE)
     @JoinColumn(name = "AUTHOR_ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private User author;
 
     @OnDelete(DeletePolicy.CASCADE)
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     protected List<PostLike> postLikes;
 
     @OnDelete(DeletePolicy.CASCADE)
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     protected List<PostComment> postComments;
 
     public List<PostLike> getPostLikes() {
