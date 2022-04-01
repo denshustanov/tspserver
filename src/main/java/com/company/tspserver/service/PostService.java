@@ -26,4 +26,5 @@ public interface PostService {
     PostComment createPostComment(PostCommentDTO commentDTO);
     void deletePostComment(PostComment postComment);
     PostComment findPostCommentById(UUID id);
+    List<Post> findPostsBySubscriptions(String username, int offset);
 }

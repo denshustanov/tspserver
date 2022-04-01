@@ -23,4 +23,6 @@ public interface PostRepository {
     List<Post> findAllPosts();
 
     void deleteAllUserPosts(User user);
+
+    List<Post> loadSubscriptionsPosts(User user, int offset);
 }

@@ -6,12 +6,14 @@ import com.company.tspserver.entity.User;
 import com.company.tspserver.repository.PostRepository;
 import io.jmix.core.DataManager;
 import io.jmix.core.SaveContext;
+import io.jmix.core.Sort;
 import io.jmix.core.querycondition.PropertyCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Repository
 public class PostRepositoryImpl implements PostRepository {
@@ -85,5 +87,18 @@ public class PostRepositoryImpl implements PostRepository {
     public void deleteAllUserPosts(User user) {
         List<Post> posts = findPostByAuthor(user);
         dataManager.remove(posts);
+    }
+
+    @Override
+    public List<Post> loadSubscriptionsPosts(User user, int offset) {
+        List<Post> posts =  dataManager.load(Post.class)
+                .query("select p from Post p, Subscription s where p.author = s.subscription and s.subscriber = :user or p.author = :user")
+                .parameter("user", user)
+                .sort(Sort.by(Sort.Direction.DESC, "publicationDate"))
+                .firstResult(offset)
+                .maxResults(10)
+                .list();
+
+        return posts.stream().distinct().collect(Collectors.toList());
     }
 }

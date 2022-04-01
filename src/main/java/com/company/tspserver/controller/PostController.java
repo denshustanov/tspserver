@@ -8,8 +8,6 @@ import com.company.tspserver.entity.*;
 import com.company.tspserver.service.PostService;
 import com.company.tspserver.service.UserService;
 import io.jmix.core.security.CurrentAuthentication;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -129,11 +127,6 @@ public class PostController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping(value = "/post/{id}/comments")
-    ResponseEntity getPostComments(@PathVariable String id){
-        return null;
-    }
-
     @PostMapping(value = "/post/{id}/comment")
     ResponseEntity createPostComment(@RequestBody PostCommentDTO postCommentDTO){
         System.out.println("comment!");
@@ -143,4 +136,17 @@ public class PostController {
         PostComment comment = postService.createPostComment(postCommentDTO);
         return ResponseEntity.ok(new PostCommentDTO(comment));
     }
+
+    @GetMapping(value = "/post/newsline")
+    ResponseEntity getUserNewsLine(@RequestParam int offset){
+        String username = currentAuthentication.getUser().getUsername();
+        List<Post> posts = postService.findPostsBySubscriptions(username, offset);
+        List<PostDTO> postDTOS = new LinkedList<>();
+        for(Post post : posts){
+            postDTOS.add(postMapper.convertToDto(post));
+        }
+
+        return ResponseEntity.ok(postDTOS);
+    }
+
 }

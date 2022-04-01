@@ -9,6 +9,7 @@
         <item screen="User.browse" caption="msg://com.company.tspserver.screen.user/userBrowse.menu"/>
         <item screen="PostComment.browse"
               caption="msg://com.company.tspserver.screen.postcomment/postCommentBrowse.menu"/>
+        <item screen="PostLike.browse" caption="msg://com.company.tspserver.screen.postlike/postLikeBrowse.menu"/>
     </menu>
 
 </menu-config>

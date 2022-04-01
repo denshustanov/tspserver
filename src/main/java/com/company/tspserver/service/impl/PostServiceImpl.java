@@ -135,4 +135,10 @@ public class PostServiceImpl implements PostService {
     public PostComment findPostCommentById(UUID id) {
         return postCommentRepository.findPostCommentById(id);
     }
+
+    @Override
+    public List<Post> findPostsBySubscriptions(String username, int offset) {
+        User user = userRepository.findUserByUsername(username);
+        return postRepository.loadSubscriptionsPosts(user, offset);
+    }
 }
