@@ -10,6 +10,7 @@
         <item screen="PostComment.browse"
               caption="msg://com.company.tspserver.screen.postcomment/postCommentBrowse.menu"/>
         <item screen="PostLike.browse" caption="msg://com.company.tspserver.screen.postlike/postLikeBrowse.menu"/>
+        <item screen="Complaint.browse" caption="msg://com.company.tspserver.screen.complaint/complaintBrowse.menu"/>
     </menu>
 
 </menu-config>

@@ -4,7 +4,6 @@ import com.company.tspserver.entity.*;
 import io.jmix.security.model.EntityPolicyAction;
 import io.jmix.security.role.annotation.EntityPolicy;
 import io.jmix.security.role.annotation.ResourceRole;
-import io.jmix.security.role.annotation.SpecificPolicy;
 
 @ResourceRole(name = "Base User Rest Role", code = BaseUserRestRole.CODE)
 public interface BaseUserRestRole {

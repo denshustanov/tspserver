@@ -1,4 +1,4 @@
-package com.company.tspserver.screen.subscription;
+package com.company.tspserver.screen.postcomment.subscription;
 
 import io.jmix.ui.screen.*;
 import com.company.tspserver.entity.Subscription;

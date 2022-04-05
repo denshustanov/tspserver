@@ -6,7 +6,6 @@ import com.company.tspserver.entity.Post;
 import com.company.tspserver.entity.PostComment;
 import com.company.tspserver.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;

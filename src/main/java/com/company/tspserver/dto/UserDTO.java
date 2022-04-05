@@ -3,8 +3,6 @@ package com.company.tspserver.dto;
 import com.company.tspserver.entity.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Base64;
-
 public class UserDTO {
     private String username;
     private String password;

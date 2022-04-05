@@ -1,7 +1,6 @@
 package com.company.tspserver.service;
 
 import com.company.tspserver.entity.User;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

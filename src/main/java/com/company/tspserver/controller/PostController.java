@@ -46,6 +46,7 @@ public class PostController {
 
     @GetMapping(value = "/user/{username}/posts")
     ResponseEntity getUserPosts(@PathVariable String username){
+
         List<Post> posts = postService.findPostByAuthorUsername(username);
 
         List<PostDTO> postDTOS = new LinkedList<>();
