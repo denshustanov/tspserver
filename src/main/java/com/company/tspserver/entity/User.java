@@ -1,5 +1,6 @@
 package com.company.tspserver.entity;
 
+import com.company.tspserver.entity.complaint.Complaint;
 import io.jmix.core.HasTimeZone;
 import io.jmix.core.annotation.Secret;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
@@ -59,6 +60,9 @@ public class User implements JmixUserDetails, HasTimeZone {
 
     @Column(name = "AVATAR")
     protected byte[] avatar;
+
+    @OneToMany(mappedBy = "user")
+    private List<Complaint> complaints;
 
 
     @Transient
@@ -188,5 +192,13 @@ public class User implements JmixUserDetails, HasTimeZone {
 
     public void setSubscribers(List<Subscription> subscribers) {
         this.subscribers = subscribers;
+    }
+
+    public List<Complaint> getComplaints() {
+        return complaints;
+    }
+
+    public void setComplaints(List<Complaint> complaints) {
+        this.complaints = complaints;
     }
 }

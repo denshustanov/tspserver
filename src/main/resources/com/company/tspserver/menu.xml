@@ -3,8 +3,8 @@
 
     <menu id="application" caption="msg://com.company.tspserver/menu.application" insertBefore="administration">
         <item screen="themeSettingsScreen" caption="msg://io.jmix.ui.app.themesettings/themeSettings.caption"/>
-        <item screen="Subscription.browse"
-              caption="msg://com.company.tspserver.screen.subscription/subscriptionBrowse.menu"/>
+<!--        <item screen="Subscription.browse"-->
+<!--              caption="msg://com.company.tspserver.screen.subscription/subscriptionBrowse.menu"/>-->
         <item screen="Post.browse" caption="msg://com.company.tspserver.screen.post/postBrowse.menu"/>
         <item screen="User.browse" caption="msg://com.company.tspserver.screen.user/userBrowse.menu"/>
         <item screen="PostComment.browse"

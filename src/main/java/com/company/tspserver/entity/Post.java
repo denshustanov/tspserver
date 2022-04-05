@@ -1,5 +1,6 @@
 package com.company.tspserver.entity;
 
+import com.company.tspserver.entity.complaint.Complaint;
 import io.jmix.core.DeletePolicy;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
 import io.jmix.core.entity.annotation.OnDelete;
@@ -39,6 +40,9 @@ public class Post {
     @OnDelete(DeletePolicy.CASCADE)
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     protected List<PostComment> postComments;
+
+    @OneToMany(mappedBy = "post")
+    private List<Complaint> complaints;
 
     public List<PostLike> getPostLikes() {
         return postLikes;
@@ -94,5 +98,13 @@ public class Post {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public List<Complaint> getComplaints() {
+        return complaints;
+    }
+
+    public void setComplaints(List<Complaint> complaints) {
+        this.complaints = complaints;
     }
 }
