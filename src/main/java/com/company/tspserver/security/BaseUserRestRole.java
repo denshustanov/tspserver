@@ -33,5 +33,9 @@ public interface BaseUserRestRole {
             entityClass = Subscription.class,
             actions = EntityPolicyAction.ALL
     )
+    @EntityPolicy(
+            entityClass = UserFCMToken.class,
+            actions = EntityPolicyAction.ALL
+    )
     void user();
 }
