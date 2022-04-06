@@ -9,9 +9,11 @@ import com.company.tspserver.repository.ComplaintRepository;
 import io.jmix.core.DataManager;
 import io.jmix.core.querycondition.PropertyCondition;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class ComplaintRepositoryImpl implements ComplaintRepository{
     @Autowired
     protected DataManager dataManager;

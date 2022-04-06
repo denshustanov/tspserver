@@ -6,6 +6,8 @@ import com.company.tspserver.entity.Post;
 import com.company.tspserver.entity.PostAttachment;
 import com.company.tspserver.entity.PostComment;
 import com.company.tspserver.entity.PostLike;
+import com.company.tspserver.entity.complaint.Complaint;
+import com.company.tspserver.entity.complaint.ComplaintCause;
 
 import java.util.List;
 import java.util.UUID;
@@ -27,4 +29,5 @@ public interface PostService {
     void deletePostComment(PostComment postComment);
     PostComment findPostCommentById(UUID id);
     List<Post> findPostsBySubscriptions(String username, int offset);
+    Complaint createPostComplaint(String username, UUID postId, ComplaintCause complaintCause);
 }

@@ -2,16 +2,21 @@ package com.company.tspserver.controller;
 
 import com.company.tspserver.dto.UserDTO;
 import com.company.tspserver.entity.User;
+import com.company.tspserver.service.FCMService;
 import com.company.tspserver.service.PostService;
 import com.company.tspserver.service.SubscriptionService;
 import com.company.tspserver.service.UserService;
+import com.company.tspserver.service.impl.fcm.PushNotifyConf;
+import com.google.firebase.messaging.FirebaseMessagingException;
 import io.jmix.core.security.CurrentAuthentication;
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 public class UserController {
@@ -26,6 +31,9 @@ public class UserController {
 
     @Autowired
     protected PostService postService;
+
+    @Autowired
+    protected FCMService fcmService;
 
     @PostMapping(value = "/user/register")
     public ResponseEntity registerUser(@RequestBody UserDTO userDTO) {
@@ -86,5 +94,31 @@ public class UserController {
             userDTOS.add(new UserDTO(user));
         }
         return ResponseEntity.ok(userDTOS);
+    }
+
+    @PostMapping(value = "/user/fcm-token")
+    public ResponseEntity createUserFCMToken(@RequestParam(name = "token") String token){
+        String username = currentAuthentication.getUser().getUsername();
+        fcmService.createToken(username, token);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping(value = "/user/fcm-token")
+    public ResponseEntity deleteUserFCMToken(@RequestParam(name = "token") String token){
+        String username = currentAuthentication.getUser().getUsername();
+        fcmService.deleteToken(username, token);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(value = "/user/send-test-push/{username}")
+    public ResponseEntity sendTestPush(@PathVariable String username) {
+        User user = userService.findUserByUsername(username);
+        PushNotifyConf conf = new PushNotifyConf();
+        conf.setBody("Test notification for " + username);
+        conf.setTitle("Test");
+        conf.setIcon("");
+        conf.setTtlInSeconds("5");
+        fcmService.sendPersonal(conf, user);
+        return ResponseEntity.ok().build();
     }
 }

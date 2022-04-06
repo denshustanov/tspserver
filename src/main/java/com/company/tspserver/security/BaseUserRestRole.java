@@ -1,6 +1,7 @@
 package com.company.tspserver.security;
 
 import com.company.tspserver.entity.*;
+import com.company.tspserver.entity.complaint.Complaint;
 import io.jmix.security.model.EntityPolicyAction;
 import io.jmix.security.role.annotation.EntityPolicy;
 import io.jmix.security.role.annotation.ResourceRole;
@@ -31,6 +32,14 @@ public interface BaseUserRestRole {
     )
     @EntityPolicy(
             entityClass = Subscription.class,
+            actions = EntityPolicyAction.ALL
+    )
+    @EntityPolicy(
+            entityClass = Complaint.class,
+            actions = EntityPolicyAction.CREATE
+    )
+    @EntityPolicy(
+            entityClass = UserFCMToken.class,
             actions = EntityPolicyAction.ALL
     )
     void user();

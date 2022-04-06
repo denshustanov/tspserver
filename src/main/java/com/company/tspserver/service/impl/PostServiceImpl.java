@@ -3,10 +3,9 @@ package com.company.tspserver.service.impl;
 import com.company.tspserver.dto.PostCommentDTO;
 import com.company.tspserver.dto.PostDTO;
 import com.company.tspserver.entity.*;
-import com.company.tspserver.repository.PostCommentRepository;
-import com.company.tspserver.repository.PostLikeRepository;
-import com.company.tspserver.repository.PostRepository;
-import com.company.tspserver.repository.UserRepository;
+import com.company.tspserver.entity.complaint.Complaint;
+import com.company.tspserver.entity.complaint.ComplaintCause;
+import com.company.tspserver.repository.*;
 import com.company.tspserver.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +27,9 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     protected PostCommentRepository postCommentRepository;
+
+    @Autowired
+    protected ComplaintRepository complaintRepository;
 
 
     @Override
@@ -140,5 +142,12 @@ public class PostServiceImpl implements PostService {
     public List<Post> findPostsBySubscriptions(String username, int offset) {
         User user = userRepository.findUserByUsername(username);
         return postRepository.loadSubscriptionsPosts(user, offset);
+    }
+
+    @Override
+    public Complaint createPostComplaint(String username, UUID postId, ComplaintCause complaintCause) {
+        User user = userRepository.findUserByUsername(username);
+        Post post = findPostById(postId);
+        return complaintRepository.createComplaint(user, post, complaintCause);
     }
 }
