@@ -51,6 +51,7 @@
                 <column id="author"/>
                 <column id="text"/>
                 <column id="publcationDate"/>
+                <column id="id"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"
