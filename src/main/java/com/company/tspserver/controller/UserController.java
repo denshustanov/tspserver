@@ -106,7 +106,7 @@ public class UserController {
     @DeleteMapping(value = "/user/fcm-token")
     public ResponseEntity deleteUserFCMToken(@RequestParam(name = "token") String token){
         String username = currentAuthentication.getUser().getUsername();
-        fcmService.deleteToken(username, token);
+        fcmService.deleteToken(fcmService.findToken(username, token));
         return ResponseEntity.ok().build();
     }
 

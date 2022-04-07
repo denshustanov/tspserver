@@ -7,10 +7,12 @@ import com.company.tspserver.dto.mapper.PostMapper;
 import com.company.tspserver.entity.*;
 import com.company.tspserver.entity.complaint.Complaint;
 import com.company.tspserver.entity.complaint.ComplaintCause;
+import com.company.tspserver.event.PostLikeEvent;
 import com.company.tspserver.service.PostService;
 import com.company.tspserver.service.UserService;
 import io.jmix.core.security.CurrentAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +33,9 @@ public class PostController {
 
     @Autowired
     protected PostMapper postMapper;
+
+    @Autowired
+    protected ApplicationEventPublisher eventPublisher;
 
     @PostMapping(value = "/post")
     ResponseEntity createPost(@RequestBody PostDTO postDTO) {
@@ -119,6 +124,8 @@ public class PostController {
         String username = currentAuthentication.getUser().getUsername();
         UUID postId = UUID.fromString(id);
         PostLike like = postService.createPostLike(username, postId);
+
+        eventPublisher.publishEvent(new PostLikeEvent(like));
         return ResponseEntity.ok().build();
     }
 

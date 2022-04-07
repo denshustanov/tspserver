@@ -21,13 +21,16 @@ public class UserFCMTokenRepositoryImpl implements UserFCMTokenRepository {
         UserFCMToken fcmToken = dataManager.create(UserFCMToken.class);
         fcmToken.setUsername(username);
         fcmToken.setToken(token);
-
-        return dataManager.save(fcmToken);
+        try{
+            findToken(username, token);
+        } catch (Exception e) {
+            return dataManager.save(fcmToken);
+        }
+        return null;
     }
 
     @Override
-    public void deleteToken(String username, String token) {
-        UserFCMToken fcmToken = findToken(username, token);
+    public void deleteToken(UserFCMToken fcmToken) {
         dataManager.remove(fcmToken);
     }
 

@@ -9,7 +9,7 @@ import java.util.List;
 public interface FCMService {
     void sendPersonal(PushNotifyConf conf, User user);
     UserFCMToken createToken(String username, String token);
-    void deleteToken(String username, String token);
+    void deleteToken(UserFCMToken token);
     UserFCMToken findToken(String username, String token);
     List<UserFCMToken> findTokensByUsername(String username);
 }

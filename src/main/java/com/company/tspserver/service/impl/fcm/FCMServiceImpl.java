@@ -12,6 +12,7 @@ import com.google.firebase.messaging.*;
 import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -37,10 +38,12 @@ public class FCMServiceImpl implements FCMService {
 
     @PostConstruct
     protected void initFirebase(){
-        Path p = Paths.get(serviceAccountFilePath);
-        try(InputStream serviceAccount = Files.newInputStream(p)){
+//        Path p = Paths.get(serviceAccountFilePath);
+        try{
+            GoogleCredentials googleCredentials = GoogleCredentials
+                    .fromStream(new ClassPathResource(serviceAccountFilePath).getInputStream());
             FirebaseOptions firebaseOptions = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                    .setCredentials(googleCredentials)
                     .build();
             FirebaseApp.initializeApp(firebaseOptions);
         } catch (IOException e) {
@@ -68,7 +71,8 @@ public class FCMServiceImpl implements FCMService {
             try{
                 String response = FirebaseMessaging.getInstance().send(message);
             } catch (FirebaseMessagingException e) {
-                Logger.getLogger(FCMServiceImpl.class.getName()).log(Level.SEVERE, null, e);
+                Logger.getLogger(FCMServiceImpl.class.getName()).info(e.getMessage());
+                deleteToken(token);
             }
         }
     }
@@ -79,8 +83,8 @@ public class FCMServiceImpl implements FCMService {
     }
 
     @Override
-    public void deleteToken(String username, String token) {
-        userFCMTokenRepository.deleteToken(username, token);
+    public void deleteToken(UserFCMToken token) {
+        userFCMTokenRepository.deleteToken(token);
     }
 
     @Override

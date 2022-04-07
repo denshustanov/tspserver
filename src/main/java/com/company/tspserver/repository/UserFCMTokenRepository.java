@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserFCMTokenRepository {
     UserFCMToken createToken(String username, String token);
-    void deleteToken(String username, String token);
+    void deleteToken(UserFCMToken token);
     UserFCMToken findToken(String username, String token);
     List<UserFCMToken> findTokensByUsername(String username);
 }
